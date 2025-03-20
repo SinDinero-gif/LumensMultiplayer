@@ -1,7 +1,5 @@
 using Photon.Pun;
-using Systems.Mechanisms;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Systems.Player
 {
@@ -11,7 +9,9 @@ namespace Systems.Player
     {
         private Rigidbody2D _rb;
         
-        private Vector2 _movement;
+        private AnimatorManager _animatorManager;
+        
+        public Vector2 movement;
 
         public float speed;
         
@@ -19,6 +19,11 @@ namespace Systems.Player
         void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+
+            if (_animatorManager == null)
+            {
+                _animatorManager = GetComponent<AnimatorManager>();
+            }
         }
 
         // Update is called once per frame
@@ -33,16 +38,17 @@ namespace Systems.Player
         
         private void MoveDirection()
         {
-            _movement.x = Input.GetAxisRaw("Horizontal");
+            movement.x = Input.GetAxisRaw("Horizontal");
             
-            _movement.y = 0;
+            movement.y = 0;
 
-             _movement *= speed;
+             movement *= speed;
         }
 
         private void Move()
         {
-            _rb.linearVelocity = new Vector2(_movement.x, _rb.linearVelocity.y);
+            _rb.linearVelocity = new Vector2(movement.x, _rb.linearVelocity.y);
+            
         }
     }
 }
