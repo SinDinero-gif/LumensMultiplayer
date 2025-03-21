@@ -16,10 +16,10 @@ GameObject:
   - component: {fileID: 3823859676431492144}
   - component: {fileID: 7634905591393119436}
   - component: {fileID: 6969843149322347521}
-  - component: {fileID: 7435707659451253618}
   - component: {fileID: 4335111816373540463}
   - component: {fileID: 6467191253963251071}
   - component: {fileID: -8549820714760001895}
+  - component: {fileID: -2409876498499257484}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f928afb64271dcb40b38e48e6a06780e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   jumpTimer: 6
   jumpPower: 10
   fallMultiplier: 3
@@ -221,18 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7391f9928aa2b4b83b22daaf58f519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7435707659451253618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6334306517253375004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a7391f9928aa2b4b83b22daaf58f519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!95 &4335111816373540463
 Animator:
   serializedVersion: 7
@@ -270,11 +260,12 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
   - {fileID: -8549820714760001895}
+  - {fileID: -2409876498499257484}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -294,3 +285,30 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 0
+--- !u!114 &-2409876498499257484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6334306517253375004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsGrounded
+  - Type: 4
+    SynchronizeType: 2
+    Name: Walking
+  - Type: 9
+    SynchronizeType: 0
+    Name: Jump
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0

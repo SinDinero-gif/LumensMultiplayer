@@ -33,9 +33,8 @@ namespace Systems.Player
             
             MoveDirection();
             Move();
-            
         }
-        
+
         private void MoveDirection()
         {
             movement.x = Input.GetAxisRaw("Horizontal");
@@ -48,7 +47,6 @@ namespace Systems.Player
         private void Move()
         {
             _rb.linearVelocity = new Vector2(movement.x, _rb.linearVelocity.y);
-            
         }
     }
 }

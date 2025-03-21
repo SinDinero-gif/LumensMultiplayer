@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -53,11 +54,17 @@ namespace Systems.Player
             }
 
             animator.SetBool(IsGrounded, _isGrounded);
-
-            FlipSprite();
             WalkAnimation();
+            
+            
         }
 
+        private void FixedUpdate()
+        {
+            FlipSprite();
+        }
+
+        [PunRPC]
         public void JumpAnimation()
         {
             animator.SetTrigger(JumpState);
@@ -73,22 +80,38 @@ namespace Systems.Player
             {
                 animator.SetBool(IsWalking, false);
             }
-            
         }
-
+        
+        [PunRPC]
+        private void FlipSpriteRPC(float faceDir)
+        {
+            if (faceDir > 0)
+            {
+                _renderer.flipX = false;
+            }
+            else if (faceDir < 0)
+            {
+                _renderer.flipX = true;
+            }
+        }
+        
         private void FlipSprite()
         {
-            if (_renderer)
+            if (!photonView.IsMine) return; // Only the local player controls flipping
+
+            float faceDirLocal = _movement.movement.x; // Determine direction
+
+            if (faceDirLocal > 0)
             {
-                if (_movement.movement.x > 0)
-                {
-                    _renderer.flipX = false;
-                }
-                else if (_movement.movement.x < 0)
-                {
-                    _renderer.flipX = true;
-                }
+                _renderer.flipX = false;
             }
+            else if (faceDirLocal < 0)
+            {
+                _renderer.flipX = true;
+            }
+            
+            photonView.RPC("FlipSpriteRPC", RpcTarget.Others, faceDirLocal); // Sync to others
+            
         }
     }
 }
