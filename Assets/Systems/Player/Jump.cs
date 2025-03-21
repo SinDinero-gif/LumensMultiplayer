@@ -1,13 +1,15 @@
 using System;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Systems.Player
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(PhotonView))]
     public class Jump : MonoBehaviourPun
     {
-        private Rigidbody2D _rb;
+        [HideInInspector]
+        public Rigidbody2D rb;
 
         [Header("Jump Settings")]
         [SerializeField] private float jumpTimer;
@@ -15,7 +17,7 @@ namespace Systems.Player
         [SerializeField] private float fallMultiplier;
         [SerializeField] private float jumpMultiplier;
         [SerializeField] private float jumpDuration;
-        
+        public float jumpRaycastDistance;
         
         private int _jumpCount;
 
@@ -23,13 +25,17 @@ namespace Systems.Player
 
         private Vector2 _vecGravity;
         
-        private bool _isJumping;
+        [HideInInspector]
+        public bool isJumping;
+        
+        private AnimatorManager _animatorManager;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _vecGravity = new Vector2(0f, -Physics2D.gravity.y);
-            _rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody2D>();
+            _animatorManager = GetComponent<AnimatorManager>();
         }
 
         // Update is called once per frame
@@ -40,22 +46,23 @@ namespace Systems.Player
             if (Input.GetButtonDown("Jump") && IsGrounded())
             {
                 Debug.Log("Jump");
-                _rb.linearVelocity = new Vector2(_rb.linearVelocityX, jumpPower);
-                _isJumping = true;
+                _animatorManager.photonView.RPC("JumpAnimation", RpcTarget.AllBuffered);
+                rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpPower);
+                isJumping = true;
                 jumpDuration = 0;
             }
 
-            if (_rb.linearVelocity.y > 0 && _isJumping)
+            if (rb.linearVelocity.y > 0 && isJumping)
             {
                 jumpDuration += Time.deltaTime;
-                if(jumpDuration > jumpTimer) _isJumping = false;
+                if(jumpDuration > jumpTimer) isJumping = false;
             }
             
-            if (Input.GetButtonUp("Jump") && _isJumping)
+            if (Input.GetButtonUp("Jump") && isJumping)
             {
-                _isJumping = false;
+                isJumping = false;
                 
-                if(_rb.linearVelocityY > 0) _rb.linearVelocity = new Vector2(_rb.linearVelocityX, _rb.linearVelocityY * 0.3f);
+                if(rb.linearVelocityY > 0) rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * 0.3f);
                 
             }
             
@@ -66,21 +73,21 @@ namespace Systems.Player
         {
             if (!photonView.IsMine) return;
             
-            if (_rb.linearVelocityY < 0)
+            if (rb.linearVelocityY < 0)
             {
-                _rb.linearVelocity -= _vecGravity * (fallMultiplier * Time.deltaTime);
+                rb.linearVelocity -= _vecGravity * (fallMultiplier * Time.deltaTime);
             }
         }
 
-        private bool IsGrounded()
+        public bool IsGrounded()
         {
-            return Physics2D.Raycast(transform.position, Vector3.down, 1.1f, groundLayer);
+            return Physics2D.Raycast(transform.position, Vector3.down, jumpRaycastDistance, groundLayer);
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = IsGrounded()? Color.green : Color.red;
-            Gizmos.DrawRay(transform.position, -transform.up * 1.1f);
+            Gizmos.DrawRay(transform.position, -transform.up * jumpRaycastDistance);
         }
     }
 }

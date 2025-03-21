@@ -56,7 +56,7 @@ namespace Systems.Network
             base.OnJoinedRoom();
             print($"Has Joined The Room! Name: {PhotonNetwork.CurrentRoom.Name}");
             
-            PhotonNetwork.LoadLevel("Mechanics");
+            PhotonNetwork.LoadLevel("Game");
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
