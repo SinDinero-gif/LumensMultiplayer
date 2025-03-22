@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Systems.Mechanisms
 {
-    public class Door : Activation
+    public class TranslatableObject : Activation
     {
         public Transform endPointTransform;
         public float duration = 2f;

@@ -1,6 +1,4 @@
-using System;
 using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 
@@ -56,7 +54,7 @@ namespace Systems.Network
             base.OnJoinedRoom();
             print($"Has Joined The Room! Name: {PhotonNetwork.CurrentRoom.Name}");
             
-            PhotonNetwork.LoadLevel("Game");
+            PhotonNetwork.LoadLevel("Lobby");
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)

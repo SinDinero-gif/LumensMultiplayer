@@ -46,6 +46,8 @@ MonoBehaviour:
   - JumpAnimation
   - FlipSprite
   - FlipSpriteRPC
+  - CheckPlayers
+  - StartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
