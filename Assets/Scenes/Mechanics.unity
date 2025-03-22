@@ -1416,7 +1416,7 @@ GameObject:
   - component: {fileID: 1940976943}
   - component: {fileID: 1940976942}
   m_Layer: 0
-  m_Name: ColorChange
+  m_Name: ColorChange Button
   m_TagString: ColorChanger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
