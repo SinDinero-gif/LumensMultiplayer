@@ -5,6 +5,9 @@ namespace Systems.Network
 {
     public class PlayerSpawner : MonoBehaviour
     {
+        private readonly Vector2 _player1SpawnPos = new Vector2(-12f, 10f);
+        private readonly Vector2 _player2SpawnPos = new Vector2(12f, 1.5f);
+        
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -15,18 +18,20 @@ namespace Systems.Network
         {
             Debug.Log("Spawning player");
             
-            Vector2 spawnPos = RandomPoint(0, 1.5f);
+            Vector2 spawnPos = GetSpawnPosition();
             
             PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
             
             Debug.Log("Player has Spawned");
         }
 
-        private Vector2 RandomPoint(float x, float y)
+        private Vector2 GetSpawnPosition()
         {
-            x = Random.Range(-8.0f, 8.0f);
-            
-            return new Vector2(x, y);
+            // Get the player's index in the room
+            int playerIndex = PhotonNetwork.LocalPlayer.ActorNumber;
+
+            // Assign spawn position based on player index
+            return playerIndex == 1 ? _player1SpawnPos : _player2SpawnPos;
         }
     }
 }
