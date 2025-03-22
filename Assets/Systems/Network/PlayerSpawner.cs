@@ -5,8 +5,8 @@ namespace Systems.Network
 {
     public class PlayerSpawner : MonoBehaviour
     {
-        private readonly Vector2 _player1SpawnPos = new Vector2(-12f, 10f);
-        private readonly Vector2 _player2SpawnPos = new Vector2(12f, 1.5f);
+        private readonly Vector2 _player1SpawnPos = new Vector2(-12f, 0.5f);
+        private readonly Vector2 _player2SpawnPos = new Vector2(12f, 0.5f);
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

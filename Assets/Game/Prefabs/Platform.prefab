@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 3680491385557071536}
   - component: {fileID: 64201509309891157}
   - component: {fileID: 1338684384097297550}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ActivablePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
