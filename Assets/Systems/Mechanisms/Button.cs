@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Photon.Pun;
 using Systems.Mechanisms.Base;
 using UnityEngine;
@@ -6,22 +7,24 @@ namespace Systems.Mechanisms
 {
     public class Button : Interaction
     {
-        [SerializeField] Activation activableObject;
+        [SerializeField] private List<Activation> activableObjects;
         
         [PunRPC]
         protected override void OnInteraction()
         {
-            if (colorType == activableObject.colorType)
+            foreach (Activation activableObject in activableObjects)
             {
-                activableObject.Activate();    
-            }
-            else
-            {
-                Debug.Log($"{activableObject.name} doesn't have a valid color type");
-            }
+                if (activableObject && colorType == activableObject.colorType)
+                {
+                    activableObject.Activate();    
+                }
+                else
+                {
+                    //Debug.Log($"{activableObject.name} doesn't have a valid color type");
+                }
+            }   
             
-            
-            Debug.Log("Button is clicked");
+            //Debug.Log("Button is clicked");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Systems.Mechanisms
         protected override void OnActivation()
         {
             transform.DOMove(_endPoint, duration).SetEase(Ease.InOutSine);
-            Debug.Log("Door activated");
+            //Debug.Log("Door activated");
         }
 
         

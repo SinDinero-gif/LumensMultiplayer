@@ -45,7 +45,6 @@ namespace Systems.Player
             
             if (Input.GetButtonDown("Jump") && IsGrounded())
             {
-                Debug.Log("Jump");
                 _animatorManager.photonView.RPC("JumpAnimation", RpcTarget.AllBuffered);
                 rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpPower);
                 isJumping = true;
